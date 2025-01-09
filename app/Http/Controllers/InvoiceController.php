@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Invoice;
@@ -14,9 +13,6 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
-
-        return response()->json($invoices);
     }
 
     /**

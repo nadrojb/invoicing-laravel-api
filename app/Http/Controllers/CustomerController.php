@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
@@ -15,8 +14,14 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
-
-        return response()->json($customers);
+        if (!$customers) {
+            return response()->json([
+                'message' => 'No data found',
+            ], 404);
+        } else return response()->json([
+            'message' => 'Customers successfully fetched',
+            'data' => $customers
+        ]);
     }
 
     /**
