@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        $customers = Customer::all();
+        $customers = Customer::all()?->makeHidden(['created_at', 'updated_at']);
         if (!$customers) {
             return response()->json([
                 'message' => 'No data found',
@@ -45,7 +46,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return $customer;
+
     }
 
     /**
