@@ -46,7 +46,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-
+        return response()->json(['data' => $customer]);
     }
 
     /**
