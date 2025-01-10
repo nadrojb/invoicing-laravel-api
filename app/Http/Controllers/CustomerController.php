@@ -14,7 +14,8 @@ class CustomerController extends Controller
      */
     public function index(): JsonResponse
     {
-        $customers = Customer::all()?->makeHidden(['created_at', 'updated_at']);
+        //I swapped all for paginate so it shows 15 invoices per page
+        $customers = Customer::paginate()?->makeHidden(['created_at', 'updated_at']);
         if (!$customers) {
             return response()->json([
                 'message' => 'No data found',
