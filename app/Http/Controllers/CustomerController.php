@@ -46,7 +46,16 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return response()->json(['data' => $customer]);
+        $customer = $customer->makeHidden(['created_at', 'updated_at']);
+        if (!$customer) {
+            return response()->json([
+                'message' => 'No data found',
+            ], 404);
+        } else return response()->json([
+            'message' => 'Customer successfully fetched',
+            'data' => $customer
+        ]);
+
     }
 
     /**
