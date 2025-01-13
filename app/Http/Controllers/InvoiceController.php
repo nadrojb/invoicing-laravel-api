@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Invoice;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 
@@ -13,18 +14,30 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        //I swapped all for paginate so it shows 15 invoices per page
-        $invoices = Invoice::all()?->makeHidden(['created_at', 'updated_at']);
-        if (!$invoices) {
-            return response()->json([
-                'message' => 'No data found',
-            ], 404);
-        } else return response()->json([
-            'message' => 'Invoices successfully fetched',
-            'data' => $invoices
+        $request->validate([
+            'status' => 'nullable|in:B,P,V'
         ]);
+
+    $query = Invoice::query();
+
+    if($request->has('status')) {
+        $query->where('status', $request->get('status'));
+        return response()->json([
+            'message' => 'Invoices successfully fetched',
+            'data' => $query->get()?->makeHidden(['created_at', 'updated_at'])
+        ], 200);
+    } else if (!$request->has('status')) {
+        return response()->json([
+            'message' => 'Invoices successfully fetched',
+            'data' => Invoice::all()?->makeHidden(['created_at', 'updated_at'])
+        ], 200);
+    }  else {
+        return response()->json([
+            'message' => 'No data found',
+        ], 404);
+    }
     }
 
     /**
