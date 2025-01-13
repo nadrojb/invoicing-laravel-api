@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $request->validate([
-            'status' => 'nullable|in:B,P,V'
+            'status' => 'nullable|in:billed,paid,void'
         ]);
 
     $query = Invoice::query();

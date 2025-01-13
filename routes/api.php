@@ -9,11 +9,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/', function() {
-    return response()->json([
-        'message' => 'Hello World!'
-    ], 200);
-});
+
 
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customer/{customer}', [CustomerController::class, 'show']);
