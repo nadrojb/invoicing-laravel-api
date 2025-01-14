@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\ApiLoginRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ApiLoginRequest;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\StoreInvoiceRequest;
+use App\Http\Requests\Api\V1\UpdateInvoiceRequest;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 
 class InvoiceController extends Controller

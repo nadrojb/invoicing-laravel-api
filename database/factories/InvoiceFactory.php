@@ -19,7 +19,7 @@ class InvoiceFactory extends Factory
      */
     public function definition(): array
     {
-        $status = $this->faker->randomElement(['B', 'P', 'V']);
+        $status = $this->faker->randomElement(['B', 'P', 'X']);
 
         return [
             'user_id' => User::factory(),
