@@ -22,7 +22,8 @@ class ApiLoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'] //making sure its required, a string and a valid email address
+            'email' => ['required', 'string', 'email'], //making sure its required, a string and a valid email address
+            'password' => ['required', 'string', 'min:8']
         ];
     }
 }
