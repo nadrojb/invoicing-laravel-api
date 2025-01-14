@@ -23,7 +23,7 @@ class InvoiceFactory extends Factory
 
         return [
             'user_id' => User::factory(),
-            'customer_name' => $this->faker->company,
+            'customer_name' => $this->faker->company(),
             'amount' => $this->faker->numberBetween(100, 20000),
             'status' => $status,
             'billed_date' => $this->faker->dateTimeBetween('-2 years', 'now'),

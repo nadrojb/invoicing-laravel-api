@@ -14,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $this->call([
-            CustomerSeeder::class,
-        ]);
+        $users = User::factory(10)->create();
+
+        \App\Models\Invoice::factory(100)
+            ->recycle($users)//recycle is going to assign a random user to each of the invoices which are created
+            ->create();
+
     }
 }
