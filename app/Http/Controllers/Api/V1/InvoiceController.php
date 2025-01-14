@@ -18,7 +18,7 @@ class InvoiceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $request->validate([
-            'status' => 'nullable|in:billed,paid,void'
+            'status' => 'nullable|in:B,P,V'
         ]);
 
     $query = Invoice::query();
@@ -41,13 +41,7 @@ class InvoiceController extends Controller
     }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -71,15 +65,6 @@ class InvoiceController extends Controller
             'message' => 'Invoice successfully fetched',
             'data' => $invoice
         ]);
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Invoice $invoice)
-    {
-        //
     }
 
     /**
