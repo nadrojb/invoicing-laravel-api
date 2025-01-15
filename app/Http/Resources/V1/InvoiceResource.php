@@ -22,8 +22,14 @@ class InvoiceResource extends JsonResource
                 'customerName' => $this->customer_name,
                 'amount' => $this->amount,
                 'status' => $this->status,
-                'billedDate' => $this->billed_date,
-                'paidDate' => $this->paid_date,
+                'billedDate' => $this->when(
+                    $request->routeIs('invoices.show'),
+                    $this->billed_date
+                ),
+                'paidDate' => $this->when(
+                    $request->routeIs('invoices.show'),
+                    $this->paid_date
+                ),
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at
             ],
