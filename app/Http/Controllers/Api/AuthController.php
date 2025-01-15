@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\LoginUserRequest;
 use App\Models\User;
 use App\Traits\ApiResponses;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,8 +35,10 @@ class AuthController extends Controller
         );
     }
 
-    public function register(): JsonResponse
-    {
-        return $this->ok('register');
-    }
+   public function logout (Request $request)
+   {
+       $request->user()->currentAccessToken()->delete();
+
+       return $this->ok('');
+   }
 }
