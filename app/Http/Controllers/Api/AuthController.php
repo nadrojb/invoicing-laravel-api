@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ApiLoginRequest;
+use App\Http\Requests\Api\V1\LoginUserRequest;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
     use ApiResponses;
-    public function login (ApiLoginRequest $request): JsonResponse
+    public function login (LoginUserRequest $request): JsonResponse
     {
         return $this->ok($request->get('email'));
     }
