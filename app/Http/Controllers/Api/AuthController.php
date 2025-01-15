@@ -16,9 +16,9 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request): JsonResponse
     {
-       $request->validated($request->all());//validated returns an array of the data that was successfully validated from the form request.
+        $request->validated($request->all());//validated returns an array of the data that was successfully validated from the form request.
 
-        if(!Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return $this->error('Invalid credentials', 401);
         }
         $user = User::where('email', $request->email)->first();
@@ -30,15 +30,18 @@ class AuthController extends Controller
         return $this->ok(
             'Authenticated',
             [
-                'token' => $user->createToken('API token for' . $user->email)->plainTextToken
+                'token' => $user->createToken(
+                    'API token for' . $user->email,
+                    ['*'],
+                    now()->addMonth())->plainTextToken
             ]
         );
     }
 
-   public function logout (Request $request)
-   {
-       $request->user()->currentAccessToken()->delete();
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
 
-       return $this->ok('');
-   }
+        return $this->ok('');
+    }
 }
