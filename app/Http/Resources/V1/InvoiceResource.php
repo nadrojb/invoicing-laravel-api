@@ -44,6 +44,9 @@ class InvoiceResource extends JsonResource
                     ]
                 ]
             ],
+            'includes' => [
+                new UserResource($this->user)
+            ],
             'links' => [
                 ['self' => route('invoices.show', ['invoice' => $this->id])]
             ]
