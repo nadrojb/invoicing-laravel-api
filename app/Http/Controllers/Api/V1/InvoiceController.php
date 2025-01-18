@@ -6,18 +6,16 @@ use App\Http\Requests\Api\V1\StoreInvoiceRequest;
 use App\Http\Requests\Api\V1\UpdateInvoiceRequest;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Models\Invoice;
+use Illuminate\Validation\Rules\In;
 
 class InvoiceController extends ApiController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Invoice $invoice)
+    public function index(InvoiceFilter $filters)
     {
-        if ($this->include('author')) {
-            return InvoiceResource::collection(Invoice::with('user')->paginate());
-        }
-        return InvoiceResource::collection(Invoice::paginate());
+        return InvoiceResource::collection(Invoice::filter($filters)->paginate());
     }
 
     /**
