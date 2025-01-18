@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Api\V1\ApiController;
 use App\Http\Requests\Api\V1\StoreInvoiceRequest;
 use App\Http\Requests\Api\V1\UpdateInvoiceRequest;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Models\Invoice;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-
 
 class InvoiceController extends ApiController
 {
@@ -35,10 +31,10 @@ class InvoiceController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show(Invoice $invoice): InvoiceResource
     {
         if ($this->include('author')) {
-            return new InvoiceResource(($invoice->load('user')));
+            return new InvoiceResource($invoice->load('user'));
         }
 
 

@@ -20,13 +20,17 @@ class UserResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'email' => $this->email,
-                $this->mergeWhen($request->routeIs('users.*'),
-                    [
-                        'emailVerifiedAt' => $this->email_verified_at,
-                        'createdAt' => $this->created_at,
-                        'updatedAt' => $this->updated_at
-                    ])
-            ]
+                // mergeWhen to conditionally opt in attributes
+                $this->mergeWhen($request->routeIs('users.*'), [
+                    'emailVerifiedAt' => $this->email_verified_at,
+                    'createdAt' => $this->created_at,
+                    'updatedAt' => $this->updated_at,
+                ]),
+            ],
+            'includes' => InvoiceResource::collection($this->whenLoaded('invoices')),
+            'links' => [
+                'self' => route('users.show', ['user' => $this->id]),
+            ],
         ];
     }
 }
