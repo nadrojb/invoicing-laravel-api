@@ -21,12 +21,15 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'data.attributes.customerName' => 'required|string',
             'data.attributes.amount' => 'required|int',
             'data.attributes.status' => 'required|string|in:B,P,X',
-            'data.relationships.author.data.id' => 'required|int'
         ];
+        if ($this->routeIs('invoices.store')) {
+            $rules['data.relationships.author.data.id'] = 'required|int';
+        }
+        return $rules;
     }
 
     public function messages()

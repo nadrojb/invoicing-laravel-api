@@ -41,7 +41,7 @@ class InvoiceController extends ApiController
             'user_id' => $request->input('data.relationships.author.data.id')
         ];
 
-        return Invoice::create($model);
+        return new InvoiceResource(Invoice::create($model));
     }
 
     /**
