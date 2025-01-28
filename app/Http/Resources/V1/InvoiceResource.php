@@ -16,7 +16,7 @@ class InvoiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'ticket',
+            'type' => 'Invoice',
             'id' => $this->id,
             'attributes' => [
                 'customerName' => $this->customer_name,
@@ -45,7 +45,7 @@ class InvoiceResource extends JsonResource
                     ]
                 ]
             ],
-            'includes' => new UserResource($this->whenLoaded('user')),
+            'includes' => new UserResource($this->whenLoaded('author')),
 
             'links' => [
                 'self' => route('invoices.show', ['invoice' => $this->id])

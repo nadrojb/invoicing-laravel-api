@@ -11,7 +11,7 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'data.attributes.customerName' => 'required|string',
+            'data.attributes.amount' => 'required|int',
+            'data.attributes.status' => 'required|string|in:B,P,X',
+            'data.relationships.author.data.id' => 'required|int'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'data.attributes.status' => 'The data.attributes.status value is invalid. Please use B, P or X'
         ];
     }
 }
