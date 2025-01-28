@@ -12,7 +12,7 @@ class ApiControllerTest extends TestCase
      */
     public function testIncludeWhenParameterIsNotProvided(): void
     {
-        $request = Request::create('/')
+        $request = Request::create('/');
         $this->assertTrue(true);
     }
 }

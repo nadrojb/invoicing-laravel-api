@@ -2,7 +2,7 @@
 
 namespace App\Http\Filters\V1;
 
-class InvoiceFilter {
+class InvoiceFilter extends QueryFilter {
     public function status($value) {
         return $this->builder->where('status', $value);
     }
