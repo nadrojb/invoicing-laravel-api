@@ -89,9 +89,6 @@ class InvoiceController extends ApiController
         } catch (ModelNotFoundException $exception) {
             return $this->error('Invoice cannot found', 404);
         }
-
-
-
     }
 
     /**
