@@ -4,14 +4,14 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateInvoiceRequest extends FormRequest
+class UpdateInvoiceRequest extends BaseInvoiceRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,12 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'data.attributes.customerName' => 'sometimes|string',
+            'data.attributes.amount' => 'sometimes|int',
+            'data.attributes.status' => 'sometimes|string|in:B,P,X',
+            'data.relationships.author.data.id' => 'sometimes|int'
         ];
+        return $rules;
     }
 }

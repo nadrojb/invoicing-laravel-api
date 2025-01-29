@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreInvoiceRequest extends FormRequest
+class StoreInvoiceRequest extends BaseInvoiceRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,10 +32,4 @@ class StoreInvoiceRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
-    {
-        return [
-            'data.attributes.status' => 'The data.attributes.status value is invalid. Please use B, P or X'
-        ];
-    }
 }

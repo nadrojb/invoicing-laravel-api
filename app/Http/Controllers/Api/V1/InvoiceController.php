@@ -35,14 +35,8 @@ class InvoiceController extends ApiController
             ]);
 
         }
-        $model = [
-            'customer_name' => $request->input('data.attributes.customerName'),
-            'amount' => $request->input('data.attributes.amount'),
-            'status' => $request->input('data.attributes.status'),
-            'user_id' => $request->input('data.relationships.author.data.id')
-        ];
 
-        return new InvoiceResource(Invoice::create($model));
+        return new InvoiceResource($request->mappedAttributes());
     }
 
     /**
@@ -64,9 +58,19 @@ class InvoiceController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
+    public function update(UpdateInvoiceRequest $request, $invoice_id)
     {
         //PATCH
+        try {
+            $invoice = Invoice::findOrFail($invoice_id);
+
+            $invoice->update($request->mappedAttributes());
+
+            return new InvoiceResource($invoice);
+
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Invoice cannot found', 404);
+        }
     }
 
     public function replace(ReplaceInvoiceRequest $request, $invoice_id)
