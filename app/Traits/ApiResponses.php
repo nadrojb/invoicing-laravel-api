@@ -19,12 +19,18 @@ trait ApiResponses
         ], $statusCode);
     }
 
-    protected function error($message, $statusCode): JsonResponse
+    protected function error($errors = [], $statusCode = null): JsonResponse
     {
+        if (is_string($errors)) {
+
         return response()->json([
-            'message' => $message,
+            'message' => $errors,
             'status' => $statusCode
         ], $statusCode);
+        }
+        return response()->json([
+            'errors' => $errors
+        ]);
     }
 }
 

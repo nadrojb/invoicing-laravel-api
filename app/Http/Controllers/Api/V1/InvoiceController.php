@@ -28,7 +28,7 @@ class InvoiceController extends ApiController
     public function store(StoreInvoiceRequest $request)
     {
         try {
-            $user = User::findOrFail($request->input('data.relationships.author.data.id'));
+            $user = User::findOrFail($request->input('data.relationships.author.data'));
         } catch (ModelNotFoundException $exception) {
             return $this->ok('User not found', [
                 'error' => 'The provided user id des not exist'
@@ -36,7 +36,7 @@ class InvoiceController extends ApiController
 
         }
 
-        return new InvoiceResource($request->mappedAttributes());
+        return new InvoiceResource(Invoice::create($request->mappedAttributes()));
     }
 
     /**
@@ -79,14 +79,7 @@ class InvoiceController extends ApiController
         try {
             $invoice = Invoice::findOrFail($invoice_id);
 
-            $model = [
-                'customer_name' => $request->input('data.attributes.customerName'),
-                'amount' => $request->input('data.attributes.amount'),
-                'status' => $request->input('data.attributes.status'),
-                'user_id' => $request->input('data.relationships.author.data.id')
-            ];
-
-            $invoice->update($model);
+            $invoice->update($request->mappedAttributes());
 
             return new InvoiceResource($invoice);
 

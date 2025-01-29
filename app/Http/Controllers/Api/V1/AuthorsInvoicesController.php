@@ -35,7 +35,7 @@ class AuthorsInvoicesController extends ApiController
                 return new InvoiceResource($invoice);
             }
 
-//            TODO ticket doesnt belong to user
+
         } catch (ModelNotFoundException $exception) {
             return $this->error('Invoice cannot found', 404);
         }
@@ -55,7 +55,6 @@ class AuthorsInvoicesController extends ApiController
                 return new InvoiceResource($invoice);
             }
 
-//            TODO ticket doesnt belong to user
         } catch (ModelNotFoundException $exception) {
             return $this->error('Invoice cannot found', 404);
         }
