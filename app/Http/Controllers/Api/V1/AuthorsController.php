@@ -54,6 +54,6 @@ class AuthorsController extends ApiController
      */
     public function destroy(User $user)
     {
-        //
+
     }
 }

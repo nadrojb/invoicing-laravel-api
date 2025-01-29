@@ -10,7 +10,7 @@ use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AuthorsInvoicesController extends Controller
+class AuthorsInvoicesController extends ApiController
 {
     public function index($author_id, InvoiceFilter $filter)
     {
@@ -28,5 +28,25 @@ class AuthorsInvoicesController extends Controller
         ];
 
         return new InvoiceResource(Invoice::create($model));
+    }
+
+
+    public function destroy($author_id, $invoice_id)
+    {
+        try {
+            $invoice = Invoice::findOrFail($invoice_id);
+
+            if ($invoice->user_id == $author_id) {
+
+                $invoice->delete();
+
+                return $this->ok('Invoice successfully deleted');
+            }
+            return $this->error('Invoice cannot be found', 404);
+
+
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Invoice cannot be found', 404);
+        }
     }
 }

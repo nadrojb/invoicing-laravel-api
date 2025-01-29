@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\InvoiceFilter;
+use App\Http\Requests\Api\V1\ReplaceInvoiceRequest;
 use App\Http\Requests\Api\V1\StoreInvoiceRequest;
 use App\Http\Requests\Api\V1\UpdateInvoiceRequest;
 use App\Http\Resources\V1\InvoiceResource;
@@ -47,14 +48,17 @@ class InvoiceController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice): InvoiceResource
+    public function show($invoice_id)
     {
-        if ($this->include('author')) {
-            return new InvoiceResource($invoice->load('user'));
+        try {
+            $invoice = Invoice::findOrFail($invoice_id);
+            if ($this->include('author')) {
+                return new InvoiceResource($invoice->load('user'));
+            }
+            return new InvoiceResource($invoice);
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Invoice cannot found', 404);
         }
-
-
-        return new InvoiceResource($invoice);
     }
 
     /**
@@ -62,14 +66,46 @@ class InvoiceController extends ApiController
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        //
+        //PATCH
+    }
+
+    public function replace(ReplaceInvoiceRequest $request, $invoice_id)
+    {
+        //PUT
+        try {
+            $invoice = Invoice::findOrFail($invoice_id);
+
+            $model = [
+                'customer_name' => $request->input('data.attributes.customerName'),
+                'amount' => $request->input('data.attributes.amount'),
+                'status' => $request->input('data.attributes.status'),
+                'user_id' => $request->input('data.relationships.author.data.id')
+            ];
+
+            $invoice->update($model);
+
+            return new InvoiceResource($invoice);
+
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Invoice cannot found', 404);
+        }
+
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoice $invoice)
+    public function destroy($invoice_id)
     {
-        //
+        try {
+            $invoice = Invoice::findOrFail($invoice_id);
+            $invoice->delete();
+
+            return $this->ok('Invoice successfully deleted');
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Invoice cannot be found', 404);
+        }
     }
 }
