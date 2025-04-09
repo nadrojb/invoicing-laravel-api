@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Filters\V1\InvoiceFilter;
-use App\Http\Requests\Api\V1\ReplaceInvoiceRequest;
-use App\Http\Requests\Api\V1\StoreInvoiceRequest;
-use App\Http\Requests\Api\V1\UpdateInvoiceRequest;
-use App\Http\Resources\V1\InvoiceResource;
+use App\Http\Requests\Api\ReplaceInvoiceRequest;
+use App\Http\Requests\Api\StoreInvoiceRequest;
+use App\Http\Requests\Api\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceResource;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

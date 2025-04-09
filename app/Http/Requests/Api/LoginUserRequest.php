@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReplaceInvoiceRequest extends BaseInvoiceRequest
+class LoginUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,9 @@ class ReplaceInvoiceRequest extends BaseInvoiceRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'data.attributes.customerName' => 'required|string',
-            'data.attributes.amount' => 'required|int',
-            'data.attributes.status' => 'required|string|in:B,P,X',
-            'data.relationships.author.data.id' => 'required|int'
+        return [
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string', 'min:8']
         ];
-        return $rules;
     }
-
 }

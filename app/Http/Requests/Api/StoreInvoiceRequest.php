@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateInvoiceRequest extends BaseInvoiceRequest
+class StoreInvoiceRequest extends BaseInvoiceRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +20,14 @@ class UpdateInvoiceRequest extends BaseInvoiceRequest
     public function rules(): array
     {
         $rules = [
-            'data.attributes.customerName' => 'sometimes|string',
-            'data.attributes.amount' => 'sometimes|int',
-            'data.attributes.status' => 'sometimes|string|in:B,P,X',
-            'data.relationships.author.data.id' => 'sometimes|int'
+            'data.attributes.customerName' => 'required|string',
+            'data.attributes.amount' => 'required|int',
+            'data.attributes.status' => 'required|string|in:B,P,X',
         ];
+        if ($this->routeIs('invoices.store')) {
+            $rules['data.relationships.author.data.id'] = 'required|int';
+        }
         return $rules;
     }
+
 }

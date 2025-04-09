@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\LoginUserRequest;
+use App\Http\Requests\Api\LoginUserRequest;
+use App\Http\Requests\Api\StoreUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponses;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-class AuthController extends Controller
+class UserAuthenticationController extends Controller
 {
     use ApiResponses;
 
     public function login(LoginUserRequest $request): JsonResponse
     {
-        $request->validated($request->all());//validated returns an array of the data that was successfully validated from the form request.
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             return $this->error('Invalid credentials', 401);
         }
@@ -36,6 +35,17 @@ class AuthController extends Controller
                     now()->addMonth())->plainTextToken
             ]
         );
+    }
+
+    public function register(StoreUserRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return new UserResource($user);
     }
 
     public function logout(Request $request)

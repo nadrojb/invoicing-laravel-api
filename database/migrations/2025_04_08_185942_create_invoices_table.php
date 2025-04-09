@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('company_id')->constrained();
             $table->string('customer_name');
             $table->integer('amount');
             $table->string('status'); //billed, paid or void?
@@ -27,6 +27,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->dropForeign(['company_id']);
+        });
+
         Schema::dropIfExists('invoices');
     }
 };
