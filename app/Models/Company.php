@@ -18,15 +18,20 @@ class Company extends Model
         'uuid',
     ];
 
-    public function userUuid(): HasMany
-    {
-        return $this->hasMany(User::class, 'user_uuid');
-    }
-
     protected function casts(): array
     {
         return [
             'uuid' => 'string',
         ];
+    }
+
+    public function userUuid(): HasMany
+    {
+        return $this->hasMany(User::class, 'user_uuid');
+    }
+
+    public function industry(): BelongsTo
+    {
+        return $this->belongsTo(Industry::class);
     }
 }

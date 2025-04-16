@@ -3,18 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
-use App\Models\Industry;
 use App\Models\Tenant;
 use App\Models\User;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class DevelopmentSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         $tenant = Tenant::factory()->create();
@@ -26,15 +20,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $this->call([
-            IndustrySeeder::class,
-        ]);
-
         Company::factory()->create([
             'tenant_id' => $tenant->id,
-            'industry_id' => 1,
             'name' => 'Admin Company',
         ]);
-
     }
 }

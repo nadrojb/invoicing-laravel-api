@@ -14,7 +14,6 @@ class TenantFactory extends Factory
     {
         return [
             'uuid' => $this->faker->uuid(),
-            'Welcome_email_sent_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
