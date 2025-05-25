@@ -11,7 +11,6 @@ class DevelopmentSeeder extends Seeder
 {
     public function run(): void
     {
-        $tenant = Tenant::factory()->create();
 
         User::factory()->create([
             'name' => 'Admin',

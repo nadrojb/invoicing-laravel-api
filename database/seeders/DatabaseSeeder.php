@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Industry;
-use App\Models\Tenant;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,24 +16,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $tenant = Tenant::factory()->create();
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'tenant_id' => $tenant->id,
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-        ]);
 
         $this->call([
             IndustrySeeder::class,
         ]);
 
-        Company::factory()->create([
-            'tenant_id' => $tenant->id,
-            'industry_id' => 1,
+        $company = Company::factory()->create([
+            'industry_id' => Industry::inRandomOrder()->first()->id,
             'name' => 'Admin Company',
         ]);
 
+        User::factory()->create([
+            'name' => 'Super Admin',
+            'last_name' => 'Admin',
+            'company_id' => $company->id,
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('Password123'),
+        ]);
     }
 }
